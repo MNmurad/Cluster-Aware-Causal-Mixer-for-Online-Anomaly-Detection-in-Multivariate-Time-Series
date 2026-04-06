@@ -19,7 +19,7 @@ timestamp=$(date +"%Y%m%d_%H%M%S") # single log per entity
 
 # Point based anomaly detection
 target_optimization=pf1
-checkpoint_load=1
+checkpoint_load=0
 python -u run_anomaly.py \
 	--task_name anomaly_detection \
 	--model $model_name \

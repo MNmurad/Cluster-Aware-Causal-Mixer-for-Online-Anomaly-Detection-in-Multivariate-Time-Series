@@ -35,8 +35,13 @@ def anom_evaluation(args, pred, true, label, a_type, vali_outputs = None, detect
     range_flag = True if (('Range_F1' in selected_keys) and full_anom_rslt) else False
     vus_flag = True if (('VUS_PR' in selected_keys) and full_anom_rslt) else False
     
+
     if a_type == 'pf1':
-        anomaly_result = anomaly_evaluation_point(pred, true, label, detect_type = detect_type)
+        if args.model == 'Basic_Mixer': # for our model, i don't need details metric for point-based, details metrics takes time during processing.
+            aff_flag = range_flag = vus_flag = False
+            
+        anomaly_result = anomaly_evaluation_point(pred, true, label, detect_type = detect_type,
+                                                  aff_flag = aff_flag, range_flag = range_flag, vus_flag = vus_flag)
 
 
     elif a_type == 'sf1':
@@ -79,7 +84,7 @@ def __update_anom_prediction_using_StartEndPointUpdating__(cur_pred, scores, evi
 
 
 from utils.vus.metrics import generate_curve
-def anomaly_evaluation_point(pred, true, label, detect_type = 'online', full_anom_rslt = False):
+def anomaly_evaluation_point(pred, true, label, detect_type = 'online', aff_flag = False, range_flag = False, vus_flag = False):
     assert isinstance(label, np.ndarray)
     
     pred = pred.numpy().squeeze() if torch.is_tensor(pred) else pred.squeeze()
@@ -95,7 +100,7 @@ def anomaly_evaluation_point(pred, true, label, detect_type = 'online', full_ano
         scores_off_norm = __robust_norm__(scores_offline)
         final_scores = scores_off_norm.max(axis = 1)
     
-    results = __PointBasedResults__(scores = final_scores, labels = label, iter_steps = 1000, full_anom_rslt = full_anom_rslt) # faster
+    results = __PointBasedResults__(scores = final_scores, labels = label, aff_flag = aff_flag, range_flag = range_flag, vus_flag = vus_flag)
     results['alpha'] = 0
     
     return results
@@ -364,7 +369,7 @@ def __SequenceBasedResults__(scores, true_label, evidence, droplimit = None,
     updated_prediction = []
     Aff_F1 = -np.inf
     R_F1 = -np.inf
-    additonal_results = {}
+    additional_results = {}
     
     for i, cur_pred in enumerate(prediction):
         if start_end_correction:
@@ -384,10 +389,10 @@ def __SequenceBasedResults__(scores, true_label, evidence, droplimit = None,
             range_results = range_based_metrics(true_label, updated_prediction[-1]) if range_flag else {}
             if aff_results.get('Aff_F1', -np.inf) > Aff_F1:
                 Aff_F1 = aff_results['Aff_F1']
-                additonal_results = additonal_results | aff_results
+                additional_results = additional_results | aff_results
             if range_results.get('Range_F1', -np.inf) > R_F1:
                 R_F1 = range_results['Range_F1']
-                additonal_results = additonal_results | range_results
+                additional_results = additional_results | range_results
                 
     ############
     
@@ -437,7 +442,7 @@ def __SequenceBasedResults__(scores, true_label, evidence, droplimit = None,
               'F1_list': F1[:-1] # required for sensitivity analysis, last one is ignored, because it is related to the last appended recall and precision value
               }
     
-    result = result | additonal_results
+    result = result | additional_results
     return result
 
 
@@ -650,7 +655,7 @@ def get_f1(pred, true):
 
 
 
-def __PointBasedResults__(scores = None, labels = None, full_anom_rslt = False, **kwargs):
+def __PointBasedResults__(scores = None, labels = None, aff_flag = False, range_flag = False, vus_flag = False):
     scores = scores.numpy() if torch.is_tensor(scores) else scores
     labels = labels.numpy() if torch.is_tensor(labels) else labels
     total_anomaly_pts = labels.sum() # number of anomaly points
@@ -685,15 +690,39 @@ def __PointBasedResults__(scores = None, labels = None, full_anom_rslt = False, 
     bst_F1_idx = F1.argmax()
     prediction = scores >= threshold_list[bst_F1_idx]
     
-    if full_anom_rslt:
+    if vus_flag:
         _, _, _, _, _, _, VUS_ROC, VUS_PR = generate_curve(labels, scores, 100, evidence = None, start_end_update = False, version='opt_mem', thre = 1000)
     else:
         VUS_ROC, VUS_PR = 0, 0
     
-    # # # # additional metric from CATCH paper, corresponding to best_f1
+    # ################################ additional metric 
+    q = np.linspace(0, 1, 500)
+    unique_threshold_values = np.unique(threshold_list)
+    selected_unique_threshold_values = np.quantile(unique_threshold_values, q)
+    
+    Aff_F1 = -np.inf
+    R_F1 = -np.inf
     additional_results = {}
-    # additional_results = affiliation_scores(labels, prediction)
-    # additional_results = additional_results | range_based_metrics(labels, prediction)
+    if aff_flag or range_flag:
+        for i, cur_thr in enumerate(selected_unique_threshold_values):
+            cur_pred = (scores >= cur_thr).astype(np.int32)
+            ########### To make the aff_score calculation faster, i will only consider the prediction, when it changes compared to previous thershold
+            # if previous pred and current pred are same, no need to calculate aff twice.
+            if (i == 0):
+                change = 1
+            else:
+                change = (cur_pred - prev_cur_pred).sum()
+            prev_cur_pred = cur_pred
+            if change:
+                aff_results = affiliation_scores(labels, cur_pred) if aff_flag else {}
+                range_results = range_based_metrics(labels, cur_pred) if range_flag else {}
+                if aff_results.get('Aff_F1', -np.inf) > Aff_F1:
+                    Aff_F1 = aff_results['Aff_F1']
+                    additional_results = additional_results | aff_results
+                if range_results.get('Range_F1', -np.inf) > R_F1:
+                    R_F1 = range_results['Range_F1']
+                    additional_results = additional_results | range_results
+    ########################################
     
     result = {'F1': F1[bst_F1_idx],
               'thres': threshold_list[bst_F1_idx], 

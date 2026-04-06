@@ -16,16 +16,19 @@ data/WADI/*.pdf
 data/WADI/*.pk
 
 data/PSM/
-data/SWAT/*.npz
-data/SWAT/*.npy
+# data/SWAT/*.npz
+# data/SWAT/*.npy
 
 .ipynb_checkpoints/
 .spyproject/
 __pycache__/
 /**/__pycache__
 /**/__init__.py
+
+logs/Tuning/
 logs/**/*.err
-logs/**/*.log
+# logs/**/*.log
+
 misc/*.xlsx
 outputs/data_outputs/
 outputs/Anomaly_HyperParam_Search/
