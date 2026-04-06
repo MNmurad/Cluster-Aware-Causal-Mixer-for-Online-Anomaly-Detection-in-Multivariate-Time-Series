@@ -52,6 +52,8 @@ pip install -r requirements.txt
 
 
 ### 3. Reproducing the main results
+Note: To make evaluation faster, we can comment out some metrics in ```selected_keys``` within the ```anomaly_evaluation``` function in ```./utils/anomaly_evaluation.py```, especially ('Aff_F1', 'Aff_P', 'Aff_R', 'Range_F1', 'Range_P', 'Range_R').
+
 Run the following scripts to reproduce the main results for single entity datasets,
 ```
 bash ./scripts/main_result/SWAT.sh
