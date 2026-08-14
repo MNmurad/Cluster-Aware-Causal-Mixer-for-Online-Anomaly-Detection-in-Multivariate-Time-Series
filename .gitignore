@@ -19,6 +19,7 @@ data/PSM/
 # data/SWAT/*.npz
 # data/SWAT/*.npy
 
+.spyproject/
 .ipynb_checkpoints/
 .spyproject/
 __pycache__/
@@ -33,6 +34,7 @@ misc/*.xlsx
 outputs/data_outputs/
 outputs/Anomaly_HyperParam_Search/
 outputs/p_value_meeting_purpose/
+outputs/Results/
 
 Results/all_results_backup_4_5_2026/
 Results/all_results_backup_4_5_2026/

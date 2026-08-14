@@ -318,11 +318,12 @@ def group_dict(methods_acc_lag,methods_keys):
     return norm_methods_acc_lag
 
 
-def generate_curve(label, score, slidingWindow, evidence = None, start_end_update = False, version = 'opt_mem', thre = 1000):
+def generate_curve(label, score, slidingWindow, function_PredAnomStartEnd_update = None, evidence = None, start_end_update = False, version = 'opt_mem', thre = 1000):
     
     tpr_3d, fpr_3d, prec_3d, window_3d, avg_auc_3d, avg_ap_3d = metricor().RangeAUC_volume(labels_original = label,
                                                                                            score = score, 
                                                                                            windowSize = slidingWindow,
+                                                                                           function_PredAnomStartEnd_update = function_PredAnomStartEnd_update,
                                                                                            evidence = evidence,
                                                                                            start_end_update = start_end_update,
                                                                                            thre = thre)

@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+Created when I should've been asleep
+@author: Murad
+SISLab, USF
+mmurad@usf.edu
+"""
 
 import numpy as np
 # import networkx as nx
@@ -16,8 +23,13 @@ import numbers
 from sklearn.preprocessing import MinMaxScaler
 from collections import Counter
 
+
 def features_clustering(data, m, featureSimilarity):
-    # data = data[:int(data.shape[0]*0.4), :] # selecting first 40%
+    """
+    m: int. number of cluster
+    featureSimilarity: int. type of similarity function
+    Our Proposed featureSimilarity == 1
+    """
     
     if m == 1:
         cluster_labels = np.zeros(data.shape[1], dtype = np.int32)
@@ -27,9 +39,8 @@ def features_clustering(data, m, featureSimilarity):
         ''' Consider the Distance matrix to cluster using Kmeans'''
         cluster_labels = kmeans_distance(data, m)
     
-    elif featureSimilarity == 1:
+    elif featureSimilarity == 1: # This is our Proposed one
         ''' Consider the feature's correlation profile to calculate the similarity matix'''
-        # cluster_labels = profile_based_clustering(data, m)
         cluster_labels = detailedProfileBasedClustering(data, m, norm_laplacian = True)
     
     elif featureSimilarity == 2:
@@ -59,10 +70,7 @@ def randomClustering(data, m):
     ''' data: [L, C] numpy array'''
     channel = data.shape[1]
     n_clusters = m
-    # rng = np.random.default_rng(seed=42)
-    # clusters = rng.integers(low=0, high=n_clusters, size=channel, dtype=np.int16)
     clusters = np.random.randint(low = 0, high = n_clusters, size = channel, dtype = np.int16, seed = 42)
-    # print(clusters)
     return list(clusters)
 
 
@@ -133,8 +141,6 @@ def Rsimilarity(data, m, norm_laplacian = True):
     return list(clusters)
 
 
-
-
 def detailedProfileBasedClustering(data, m, norm_laplacian = True):
     ''' Normalized spectral clustering according to Shi and Malik '''
     df = pd.DataFrame(data)
@@ -164,11 +170,7 @@ def detailedProfileBasedClustering(data, m, norm_laplacian = True):
     clusters = np.empty(abs_correlation_matrix.shape[0], dtype = int)
     clusters[connected_idx] = clusters_connected  # from KMeans or other method
     clusters[disconnected_idx] = max(clusters_connected) + 1  # new cluster
-    # if 1 in Counter(clusters).values():
-    #     print('single member', m, silhouette_score(1 - abs_correlation_matrix, clusters))
-    # else:
-    #     print(m, silhouette_score(1 - abs_correlation_matrix, clusters))
-            
+     
     # __figuresPlot__(m, clusters, abs_correlation_matrix)
     return list(clusters)
 

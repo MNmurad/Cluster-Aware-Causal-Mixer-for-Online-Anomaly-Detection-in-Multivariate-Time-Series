@@ -1,0 +1,61 @@
+========================================
+Time:        2026-08-14 15:16:57
+Environment: pytorch
+Torch:       2.5.1+cu118
+CUDA:        11.8
+========================================
+*** Config Updated ***
+Args in experiment: Namespace(task_name='anomaly_detection', model='CCM_TAD', target_optimization='pf1', checkpoint_load=1, ablation=0, data='WADI', entity_id=1, downsample=5, train_flag='train', mixerType='causal', num_workers=0, use_hyperParam_optim=False, seed=42, detection_type='online', score_PAdjust=0, featureSimilarity=1, batch_size=512, train_epochs=30, seq_len=24, pred_len=1, num_mix=1, tfactor=1, dfactor=3, learning_rate=0.003342786987374504, dropout=0.0, embedding_dropout=0.1, input_dropout=0.0, d_model=256, weight_decay=0.0, nheads=9, patch_flag=0, patch_len=4, stride=4, lradj='type3', use_multi_gpu=False, n_jobs=1, patience=8, features='M', target=None, freq='h', checkpoints='./checkpoints/', cols=None, itr=1, use_amp=False, use_gpu=True, gpu=0, devices='0,1', embed=0, loss='mse', optuna_seq_len=None, optuna_lr=None, optuna_batch=None, optuna_num_mix=None, optuna_tfactor=None, optuna_dfactor=None, optuna_epochs=None, optuna_dropout=None, optuna_input_dropout=None, optuna_embedding_dropout=None, optuna_dmodel=None, optuna_weight_decay=None, optuna_trial_num=2, data_path='WADI.pk', root_path='./data/WADI/', c_in=123, c_out=123, num_entities=1, detail_freq='h')
+task: anomaly_detection
+Use GPU: cuda:0
+Make 102-th column as 0. This is critical.
+one clusters for the disconnected features
+train_full 237577
+Head intialization: clusters: [10, 28, 2, 8, 2, 10, 25, 7, 31]
+Start Training- CCM_TAD_WADI_0_ds5_E1_H9_24-1_d256_b512_f1-3_causal1_fs1_42
+Make 102-th column as 0. This is critical.
+one clusters for the disconnected features
+train 190057
+Make 102-th column as 0. This is critical.
+test 34537
+Make 102-th column as 0. This is critical.
+val 47497
+>>> checkpoint_loading_Successful <<<
+Start Testing- CCM_TAD_WADI_0_ds5_E1_H9_24-1_d256_b512_f1-3_causal1_fs1_42
+Make 102-th column as 0. This is critical.
+test 34537
+Make 102-th column as 0. This is critical.
+val 47497
+[INFO] Register count_linear() for <class 'torch.nn.modules.linear.Linear'>.
+[INFO] Register zero_ops() for <class 'torch.nn.modules.dropout.Dropout'>.
+[INFO] Register zero_ops() for <class 'torch.nn.modules.container.Sequential'>.
+[INFO] Register count_normalization() for <class 'torch.nn.modules.batchnorm.BatchNorm1d'>.
+Total GFLOPs: 10.6776
+=============================================
+              COMBINED RESULTS               
+=============================================
+
+          --- Averaged Metrics ---           
+  TP              1277.0000
+  FP              193.0000
+  TN              32360.0000
+  FN              707.0000
+  TPR             0.6436
+  PPV             0.8687
+  FPR             0.0059
+  F1              0.7394
+  PR_AUC          0.6605
+  gflops          10.6776
+  avgInfTime      0.0029
+  nParams         435029.0000
+
+        --- Concatenated Metrics ---         
+  F1              0.7394
+  TP              1277
+  FP              193
+  TN              32360
+  FN              707
+
+               --- Alphas ---                
+  [0.0000]
+=============================================

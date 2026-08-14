@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+Created when I should've been asleep
+@author: Murad
+SISLab, USF
+mmurad@usf.edu
+"""
 
 import torch
 from utils.tools import set_random_seed
@@ -22,15 +29,15 @@ class Tuner:
         self.fixedSeed = ranSeed
         self.n_jobs = n_jobs 
         self.min_optuna_optim_target = np.inf
-        
+
         self.result_dic = defaultdict(list)
         self.current_time = datetime.datetime.now()
         self.current_time = str(self.current_time).replace(':', '-').split('.')[0]
         self.output_path = './outputs/Anomaly_HyperParam_Search/'
-        # self.trial_out = dict()
         os.makedirs(output_path2 := os.path.join(self.output_path, f"{args.model}_{args.data}_{self.current_time}"), exist_ok = True)
         self.output_path2 = output_path2
-        
+
+
     def optuna_objective(self, trial, args):
         # # these are the params that will be tuned:
         args.seq_len = trial.suggest_categorical('seq_len', args.optuna_seq_len)
@@ -40,18 +47,12 @@ class Tuner:
         args.d_model = trial.suggest_categorical('d_model', args.optuna_dmodel) 
         args.dropout = trial.suggest_categorical('dropout', args.optuna_dropout) 
         args.weight_decay = trial.suggest_categorical('weight_decay', args.optuna_weight_decay) 
-        
-        if args.model == 'Basic_Mixer':
-            args.num_mix = trial.suggest_categorical('num_mix', args.optuna_num_mix) 
-            args.tfactor = trial.suggest_categorical('tfactor', args.optuna_tfactor) 
-            args.dfactor = trial.suggest_categorical('dfactor', args.optuna_dfactor) 
-            args.input_dropout = trial.suggest_categorical('input_dropout', args.optuna_input_dropout) 
-            args.embedding_dropout = trial.suggest_categorical('embedding_dropout', args.optuna_embedding_dropout) 
-        elif args.model == 'TimesNet':
-            args.top_k = trial.suggest_categorical('top_k', args.optuna_top_k) 
-            args.d_ff = trial.suggest_categorical('d_ff', args.optuna_d_ff) 
-            args.e_layers = trial.suggest_categorical('e_layers', args.optuna_e_layers) 
 
+        args.num_mix = trial.suggest_categorical('num_mix', args.optuna_num_mix) 
+        args.tfactor = trial.suggest_categorical('tfactor', args.optuna_tfactor) 
+        args.dfactor = trial.suggest_categorical('dfactor', args.optuna_dfactor) 
+        args.input_dropout = trial.suggest_categorical('input_dropout', args.optuna_input_dropout) 
+        args.embedding_dropout = trial.suggest_categorical('embedding_dropout', args.optuna_embedding_dropout) 
 
         setting = unique_name(**vars(args))
         set_random_seed(self.fixedSeed) # 42
@@ -62,23 +63,19 @@ class Tuner:
         print('Args in experiment: {}'.format(args))
         exp.train(setting, optunaTrialReport = trial)        
         
-        # self.trial_out[trial.number] = exp.best_result
-        
-        #####################
+        ########################################################################################
         if exp.optuna_optim_target < self.min_optuna_optim_target:
             self.min_optuna_optim_target = exp.optuna_optim_target # F1 value
             self.path = f"checkpoints/Optuna/{setting}_{int(time.time())}_trial_{trial.number}/"
             os.makedirs(self.path, exist_ok = True)
             torch.save(exp.model.state_dict(), os.path.join(self.path, 'checkpoint.pth'))
-        #####################
-        
+        ########################################################################################
         return exp.optuna_optim_target
     
     
     def tune(self, args, disable_pruner = True): # args with some fixed params. other will be tuned in objective function
         n = args.optuna_trial_num
-        # self.trial_out = dict()
-        
+
         try:
             del self.study
             print('deleted previous tuner obj')
@@ -90,12 +87,7 @@ class Tuner:
         
         self.study.optimize(wrapped_objective, n_trials = n, n_jobs = self.n_jobs, callbacks = [self.save_optuna_stat]) 
         
-        # # === Use a lock before saving ===
-        # lock = FileLock("save.lock")
-        # with lock:
-        #     self.save_result(args)
-        
-        ###########################
+        #####################################
         while True:
             try:
                 os.mkdir("save.lock") 
@@ -106,7 +98,7 @@ class Tuner:
             self.save_result(args)#, result)
         finally:
             os.rmdir("save.lock")
-        #################
+        #####################################
         return 
     
     
@@ -215,55 +207,6 @@ def generate_unique_filename(prefix="optuna_log", extension=".txt"):
     timestamp = time.strftime("%Y%m%d_%H%M%S")
     unique_id = uuid.uuid4().hex[:8]  # Short UUID
     return f"{prefix}_{timestamp}_{unique_id}{extension}"
-
-
-    # def save_result(self, args):#, result):
-    #     data, pred_len = args.data, args.pred_len
-       
-    #     # best trial
-    #     best_params = self.study.best_params
-    #     best_result = self.study.best_trial.value
-    #     best_result_dic = self.trial_out[self.study.best_trial.number]
-        
-    #     # saving in dictionary
-    #     self.result_dic['data'].append(data)
-    #     self.result_dic['entity_id'].append(args.entity_id)
-    #     self.result_dic['downsample'].append(args.downsample)
-    #     self.result_dic['loss'].append(best_result)
-    #     self.result_dic['nheads'].append(args.nheads)
-    #     self.result_dic['pred_len'].append(pred_len)
-    #     for key, value in best_params.items():
-    #         self.result_dic[key].append(value)
-    #     self.result_dic['featureSimilarity'].append(args.featureSimilarity)
-    #     self.result_dic['TP'].append(best_result_dic['TP'])
-    #     self.result_dic['FP'].append(best_result_dic['FP'])
-    #     self.result_dic['TN'].append(best_result_dic['TN'])
-    #     self.result_dic['FN'].append(best_result_dic['FN'])
-    #     self.result_dic['alphas'].append(best_result_dic['alpha'])
-        
-    #     # csv
-    #     excel_file_name = '{}'.format(args.data)
-    #     excel_path = os.path.join(self.output_path, excel_file_name + '.xlsx')
-    #     result_df = pd.DataFrame(self.result_dic)
-        
-    #     try:
-    #         if os.path.exists(excel_path):
-    #             existing_df = pd.read_excel(excel_path)
-    #             updated_df = pd.concat([existing_df, result_df], ignore_index = True)
-    #         else:
-    #             updated_df = result_df
-    #         updated_df.to_excel(excel_path, index = False) # , float_format="%.17e")
-        
-    #     except Exception as e:
-    #         print(f"Could not write to {excel_path} due to: {e}")
-    #         timestamp = time.strftime("%Y%m%d_%H%M%S")
-    #         fallback_path = os.path.join(self.output_path, excel_file_name + '_' + timestamp + '.xlsx')
-    #         result_df.to_excel(fallback_path, index=False)
-    #         print(f"Saved to fallback file instead: {fallback_path}")
-    #     print(updated_df)
-    
-
-
 
 
 

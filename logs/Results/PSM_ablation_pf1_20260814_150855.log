@@ -1,111 +1,111 @@
 ========================================
-Time:        2026-04-06 02:11:30
+Time:        2026-08-14 15:08:57
 Environment: pytorch
 Torch:       2.5.1+cu118
 CUDA:        11.8
 ========================================
 *** Config Updated ***
-Args in experiment: Namespace(model='Basic_Mixer', data='PSM', entity_id=1, ablation=0, mixerType='causal', downsample=1, target_optimization='pf1', checkpoint_load=0, num_workers=0, task_name='anomaly_detection', use_hyperParam_optim=False, train_flag='train', seed=42, detection_type='online', score_PAdjust=0, featureSimilarity=1, batch_size=512, train_epochs=30, seq_len=24, pred_len=1, num_mix=1, tfactor=1, dfactor=1, learning_rate=0.001337127669423716, dropout=0.0, embedding_dropout=0.05, input_dropout=0.05, d_model=256, weight_decay=0.0, nheads=4, patch_flag=0, patch_len=4, stride=4, lradj='type3', use_multi_gpu=False, n_jobs=1, patience=8, features='M', target='feature_24', freq='h', checkpoints='./checkpoints/', cols=None, itr=1, use_amp=False, use_gpu=True, gpu=0, devices='0,1', embed=0, loss='mse', label_len=0, anomaly_ratio=0.25, top_k=3, d_ff=64, num_kernels=6, e_layers=2, slstm_backend='vanilla', optuna_seq_len=None, optuna_lr=None, optuna_batch=None, optuna_num_mix=None, optuna_tfactor=None, optuna_dfactor=None, optuna_epochs=None, optuna_dropout=None, optuna_input_dropout=None, optuna_embedding_dropout=None, optuna_dmodel=None, optuna_weight_decay=None, optuna_trial_num=2, optuna_top_k=3, optuna_d_ff=64, optuna_e_layers=2, data_path=None, root_path='./data/PSM/', c_in=25, enc_in=25, c_out=25, num_entities=1, detail_freq='h')
+Args in experiment: Namespace(task_name='anomaly_detection', model='CCM_TAD', target_optimization='pf1', checkpoint_load=0, ablation=0, data='PSM', entity_id=1, downsample=1, train_flag='train', mixerType='causal', num_workers=0, use_hyperParam_optim=False, seed=42, detection_type='online', score_PAdjust=0, featureSimilarity=1, batch_size=512, train_epochs=30, seq_len=24, pred_len=1, num_mix=1, tfactor=1, dfactor=1, learning_rate=0.001337127669423716, dropout=0.0, embedding_dropout=0.05, input_dropout=0.05, d_model=256, weight_decay=0.0, nheads=4, patch_flag=0, patch_len=4, stride=4, lradj='type3', use_multi_gpu=False, n_jobs=1, patience=8, features='M', target='feature_24', freq='h', checkpoints='./checkpoints/', cols=None, itr=1, use_amp=False, use_gpu=True, gpu=0, devices='0,1', embed=0, loss='mse', optuna_seq_len=None, optuna_lr=None, optuna_batch=None, optuna_num_mix=None, optuna_tfactor=None, optuna_dfactor=None, optuna_epochs=None, optuna_dropout=None, optuna_input_dropout=None, optuna_embedding_dropout=None, optuna_dmodel=None, optuna_weight_decay=None, optuna_trial_num=2, data_path=None, root_path='./data/PSM/', c_in=25, c_out=25, num_entities=1, detail_freq='h')
 task: anomaly_detection
 Use GPU: cuda:0
 train_full 132458
 Head intialization: clusters: [3, 5, 15, 2]
-Start Training- Basic_Mixer_PSM_0_ds1_E1_H4_24-1_d256_b512_f1-1_causal1_fs1_42
+Start Training- CCM_TAD_PSM_0_ds1_E1_H4_24-1_d256_b512_f1-1_causal1_fs1_42
 train 105961
 test 87818
 val 26473
-Epoch 0: cost time: 3.77 sec
+Epoch 0: cost time: 2.46 sec
 	Tr: 0.052 Val: 0.008 Tst: 0.012 Tst.pf1: 0.628 a: 0 
 	lr: 0.001337
-Epoch 1: cost time: 3.65 sec
+Epoch 1: cost time: 2.39 sec
 	Tr: 0.004 Val: 0.008 Tst: 0.012 Tst.pf1: 0.654 a: 0 *
 	lr: 0.001337
-Epoch 2: cost time: 3.62 sec
+Epoch 2: cost time: 2.60 sec
 	Tr: 0.003 Val: 0.008 Tst: 0.012 Tst.pf1: 0.656 a: 0 *
 	lr: 0.001337
-Epoch 3: cost time: 3.69 sec
+Epoch 3: cost time: 2.61 sec
 	Tr: 0.002 Val: 0.007 Tst: 0.011 Tst.pf1: 0.640 a: 0 
 	lr: 0.001203
-Epoch 4: cost time: 3.63 sec
+Epoch 4: cost time: 2.65 sec
 	Tr: 0.002 Val: 0.010 Tst: 0.011 Tst.pf1: 0.649 a: 0 
 	lr: 0.001083
-Epoch 5: cost time: 3.62 sec
+Epoch 5: cost time: 2.57 sec
 	Tr: 0.002 Val: 0.011 Tst: 0.011 Tst.pf1: 0.646 a: 0 
 	lr: 0.000975
-Epoch 6: cost time: 3.61 sec
+Epoch 6: cost time: 2.54 sec
 	Tr: 0.002 Val: 0.011 Tst: 0.011 Tst.pf1: 0.653 a: 0 
 	lr: 0.000877
-Epoch 7: cost time: 3.61 sec
+Epoch 7: cost time: 2.58 sec
 	Tr: 0.001 Val: 0.011 Tst: 0.012 Tst.pf1: 0.657 a: 0 *
 	lr: 0.000790
-Epoch 8: cost time: 3.56 sec
+Epoch 8: cost time: 2.54 sec
 	Tr: 0.001 Val: 0.010 Tst: 0.012 Tst.pf1: 0.654 a: 0 
 	lr: 0.000711
-Epoch 9: cost time: 3.18 sec
+Epoch 9: cost time: 2.55 sec
 	Tr: 0.001 Val: 0.010 Tst: 0.012 Tst.pf1: 0.652 a: 0 
 	lr: 0.000640
-Epoch 10: cost time: 2.94 sec
+Epoch 10: cost time: 2.46 sec
 	Tr: 0.001 Val: 0.011 Tst: 0.014 Tst.pf1: 0.650 a: 0 
 	lr: 0.000576
-Epoch 11: cost time: 2.87 sec
+Epoch 11: cost time: 2.56 sec
 	Tr: 0.001 Val: 0.010 Tst: 0.014 Tst.pf1: 0.651 a: 0 
 	lr: 0.000518
-Epoch 12: cost time: 2.85 sec
+Epoch 12: cost time: 2.56 sec
 	Tr: 0.001 Val: 0.010 Tst: 0.014 Tst.pf1: 0.650 a: 0 
 	lr: 0.000466
-Epoch 13: cost time: 3.01 sec
+Epoch 13: cost time: 2.55 sec
 	Tr: 0.001 Val: 0.010 Tst: 0.015 Tst.pf1: 0.647 a: 0 
 	lr: 0.000420
-Epoch 14: cost time: 3.05 sec
+Epoch 14: cost time: 2.47 sec
 	Tr: 0.001 Val: 0.009 Tst: 0.016 Tst.pf1: 0.651 a: 0 
 	lr: 0.000378
-Epoch 15: cost time: 3.14 sec
+Epoch 15: cost time: 2.42 sec
 	Tr: 0.001 Val: 0.009 Tst: 0.017 Tst.pf1: 0.640 a: 0 
 	lr: 0.000340
-Epoch 16: cost time: 3.09 sec
+Epoch 16: cost time: 2.49 sec
 	Tr: 0.001 Val: 0.009 Tst: 0.018 Tst.pf1: 0.629 a: 0 
 	lr: 0.000306
-Epoch 17: cost time: 2.81 sec
+Epoch 17: cost time: 2.56 sec
 	Tr: 0.001 Val: 0.008 Tst: 0.019 Tst.pf1: 0.618 a: 0 
 	lr: 0.000275
-Epoch 18: cost time: 3.07 sec
+Epoch 18: cost time: 2.61 sec
 	Tr: 0.001 Val: 0.009 Tst: 0.018 Tst.pf1: 0.619 a: 0 
 	lr: 0.000248
-Epoch 19: cost time: 3.18 sec
+Epoch 19: cost time: 2.60 sec
 	Tr: 0.001 Val: 0.008 Tst: 0.019 Tst.pf1: 0.623 a: 0 
 	lr: 0.000223
-Epoch 20: cost time: 3.00 sec
+Epoch 20: cost time: 2.59 sec
 	Tr: 0.001 Val: 0.008 Tst: 0.019 Tst.pf1: 0.625 a: 0 
 	lr: 0.000201
-Epoch 21: cost time: 2.87 sec
+Epoch 21: cost time: 2.60 sec
 	Tr: 0.001 Val: 0.008 Tst: 0.020 Tst.pf1: 0.619 a: 0 
 	lr: 0.000181
-Epoch 22: cost time: 3.10 sec
+Epoch 22: cost time: 2.60 sec
 	Tr: 0.001 Val: 0.007 Tst: 0.021 Tst.pf1: 0.614 a: 0 
 	lr: 0.000163
-Epoch 23: cost time: 2.90 sec
+Epoch 23: cost time: 2.59 sec
 	Tr: 0.001 Val: 0.008 Tst: 0.020 Tst.pf1: 0.615 a: 0 
 	lr: 0.000146
-Epoch 24: cost time: 3.27 sec
+Epoch 24: cost time: 2.59 sec
 	Tr: 0.001 Val: 0.007 Tst: 0.020 Tst.pf1: 0.620 a: 0 
 	lr: 0.000132
-Epoch 25: cost time: 3.01 sec
+Epoch 25: cost time: 2.63 sec
 	Tr: 0.001 Val: 0.007 Tst: 0.020 Tst.pf1: 0.614 a: 0 
 	lr: 0.000119
-Epoch 26: cost time: 3.02 sec
+Epoch 26: cost time: 2.59 sec
 	Tr: 0.001 Val: 0.007 Tst: 0.021 Tst.pf1: 0.612 a: 0 
 	lr: 0.000107
-Epoch 27: cost time: 3.06 sec
+Epoch 27: cost time: 2.61 sec
 	Tr: 0.001 Val: 0.007 Tst: 0.021 Tst.pf1: 0.607 a: 0 
 	lr: 0.000096
-Epoch 28: cost time: 3.15 sec
+Epoch 28: cost time: 2.61 sec
 	Tr: 0.001 Val: 0.007 Tst: 0.021 Tst.pf1: 0.615 a: 0 
 	lr: 0.000086
-Epoch 29: cost time: 3.06 sec
+Epoch 29: cost time: 2.57 sec
 	Tr: 0.001 Val: 0.007 Tst: 0.021 Tst.pf1: 0.608 a: 0 
 	lr: 0.000078
 Best Epoch: 7, Best F1: 0.6565702781844802
-Start Testing- Basic_Mixer_PSM_0_ds1_E1_H4_24-1_d256_b512_f1-1_causal1_fs1_42
+Start Testing- CCM_TAD_PSM_0_ds1_E1_H4_24-1_d256_b512_f1-1_causal1_fs1_42
 test 87818
 val 26473
 [INFO] Register count_linear() for <class 'torch.nn.modules.linear.Linear'>.
@@ -127,10 +127,8 @@ Total GFLOPs: 3.5451
   FPR             0.3099
   F1              0.6566
   PR_AUC          0.5358
-  VUS_ROC         0.0000
-  VUS_PR          0.0000
   gflops          3.5451
-  avgInfTime      0.0019
+  avgInfTime      0.0010
   nParams         144197.0000
 
         --- Concatenated Metrics ---         

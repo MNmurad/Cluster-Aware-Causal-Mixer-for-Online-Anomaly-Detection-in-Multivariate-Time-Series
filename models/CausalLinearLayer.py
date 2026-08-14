@@ -1,13 +1,19 @@
+# -*- coding: utf-8 -*-
+"""
+Created when I should've been asleep
+@author: Murad
+SISLab, USF
+mmurad@usf.edu
+"""
 
 import torch
 import torch.nn as nn
 from torch.nn import functional as F, init
 
-class TSLinear(nn.Module):
+
+class CausalLinearLayer(nn.Module):
     def __init__(self, in_features, out_features, bias = True, type_ = 'causal'):
-        super(TSLinear, self).__init__()
-        # assert (type_ == 'anti_causal') or (type_ == 'causal') 
-        assert type_ == 'causal' # right now I need only causal
+        super(CausalLinearLayer, self).__init__()
         
         self.in_features, self.out_features = in_features, out_features
         self.bias_enabled = bias
@@ -68,16 +74,6 @@ def create_anti_diagonal_mat(n):
     return anti_diagonal
 
 
-# # Example usage
-# L_in, L_out, batch, feature = 5, 6 , 2, 3
-# model = TSLinear(L_in, L_out, bias = True, type_ = 'anti_causal')  # Enable bias
-
-# # Example input [Batch, feature, L_in]
-# x = torch.ones(batch, feature, L_in)
-
-# # Output transformation
-# output = model(x)
-# print(output.shape)  # Should be [Batch, feature, L_out]
 
 
 

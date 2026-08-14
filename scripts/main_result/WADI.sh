@@ -8,7 +8,7 @@ fi
 export CUDA_VISIBLE_DEVICES=0
 
 # General
-model_name=Basic_Mixer
+model_name=CCM_TAD
 data=WADI
 seed=42
 timestamp=$(date +"%Y%m%d_%H%M%S") # single log per entity 

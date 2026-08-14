@@ -9,7 +9,7 @@ export CUDA_VISIBLE_DEVICES=0
 
 
 # General
-model_name=Basic_Mixer
+model_name=CCM_TAD
 data=SMAP_Combined
 seed=42
 timestamp=$(date +"%Y%m%d_%H%M%S") # single log per entity 
@@ -19,7 +19,7 @@ timestamp=$(date +"%Y%m%d_%H%M%S") # single log per entity
 
 # Point based anomaly detection
 target_optimization=pf1
-checkpoint_load=1
+checkpoint_load=0
 python -u run_anomaly.py \
 	--task_name anomaly_detection \
 	--model $model_name \

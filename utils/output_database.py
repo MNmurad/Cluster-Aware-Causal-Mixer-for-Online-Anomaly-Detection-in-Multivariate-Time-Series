@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+Created when I should've been asleep
+@author: Murad
+SISLab, USF
+mmurad@usf.edu
+"""
 
 from tabulate import tabulate
 import csv

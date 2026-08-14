@@ -1,8 +1,8 @@
 from sklearn import metrics
 import numpy as np
 import math
-# import matplotlib.pyplot as plt
-from utils.anomaly_evaluation import __update_anom_prediction_using_StartEndPointUpdating__ # comment out this, if you don't use our proposed anom detection method
+# # import matplotlib.pyplot as plt
+# from utils.anomaly_evaluation import __update_anom_prediction_using_StartEndPointUpdating__ # comment out this, if you don't use our proposed anom detection method
 
 
 class metricor:
@@ -368,7 +368,8 @@ class metricor:
 
 
     # TPR_FPR_window
-    def RangeAUC_volume(self, labels_original, score, windowSize, evidence = None, start_end_update = False, thre = 250):
+    def RangeAUC_volume(self, labels_original, score, windowSize, function_PredAnomStartEnd_update, 
+                        evidence = None, start_end_update = False, thre = 250):
         """
             Original code has:
                 labels_original,
@@ -409,7 +410,7 @@ class metricor:
                 pred = score>= threshold
                 
                 if start_end_update: # you don't need this if you don't use our sequential anomaly detection method.
-                    pred = __update_anom_prediction_using_StartEndPointUpdating__(pred, score, evidence)
+                    pred = function_PredAnomStartEnd_update(pred, score, evidence)
                 
                 TPR, FPR, Precision = self.TPR_FPR_RangeAUC(labels, pred, P,L)
                 

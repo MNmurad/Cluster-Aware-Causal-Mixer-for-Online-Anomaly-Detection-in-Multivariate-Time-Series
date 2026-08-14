@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+Created when I should've been asleep
+@author: Murad
+SISLab, USF
+mmurad@usf.edu
+"""
 
 from skimage.measure import block_reduce # for downsample
 import numpy as np

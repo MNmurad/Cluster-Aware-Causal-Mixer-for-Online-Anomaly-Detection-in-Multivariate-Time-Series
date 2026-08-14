@@ -1,7 +1,21 @@
-<h1 align="center">Time Series Anomaly Detection</h1>
-<hr style="border: 1px solid  #256ae2 ;">
+<h1 align="center">Cluster-Aware Causal Mixer for Online Anomaly Detection in Multivariate Time Series</h1>
 
+<div align="center">
+
+<p><a href="https://arxiv.org/pdf/2506.00188"><strong>Full Paper (ARXIV)</strong></a></p>
+<hr style="border: 1px solid  #256ae2 ;">
 </div>
+
+```bibtex
+@article{murad2025cluster,
+  title={Cluster-Aware Causal Mixer for Online Anomaly Detection in Multivariate Time Series},
+  author={Murad, Md Mahmuddun Nabi and Yilmaz, Yasin},
+  journal={arXiv preprint arXiv:2506.00188},
+  year={2025}
+}
+```
+## 🔄 Updates
+- **[June 2026]** 🔥🔥🔥 Accepted (Poster) <a href="https://openreview.net/forum?id=R6JV2WOftz"><strong>(ICML-2026)</strong></a>
 
 ## Get started
 Follow these steps to get started:
@@ -80,7 +94,7 @@ bash ./scripts/main_result/SMD.sh
 Generated results will be found in the directory: ```./outputs/Results/```
 
 ### Implementation Details
-- Our proposed model is implemented in ```./models/basic_mixer.py```
+- Our proposed model is implemented in ```./models/CCM_TAD.py```
 - Our proposed anomaly detection framework is implemented in ```./utils/anomaly_evaluation.py```, specifically the function ```anomaly_evaluation_sequential```.
 - Config for the datasets: ```./scripts/config/config.xlsx```
 
@@ -104,3 +118,4 @@ If checkpoint does not exist:
 2. sf1 run: checkpoint_load = 1
 
 In our current scripts, both are set to 1 because we assume a checkpoint is already available.
+

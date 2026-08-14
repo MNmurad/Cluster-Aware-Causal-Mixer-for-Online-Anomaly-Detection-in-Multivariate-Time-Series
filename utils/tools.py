@@ -1,9 +1,12 @@
+import os
 import numpy as np
 import torch
 import torch.nn as nn
 import random
 import pandas as pd
 import matplotlib.pyplot as plt
+from collections import defaultdict
+import time
 
 plt.switch_backend('agg')
 
@@ -213,3 +216,51 @@ def printCombinedResult(final_output):
     print(f"  [{alphas_str}]")
 
     print("=" * 45)
+    
+
+def save_result_to_excel(args, result):
+    while True:
+        try:
+            os.mkdir("save2.lock") 
+            break
+        except FileExistsError:
+            time.sleep(2)
+    try:
+        __save_result__(args, result)
+    finally:
+        os.rmdir("save2.lock")
+
+
+def __save_result__(args, result):
+    columns = ['data', 'ablation', 'entity_id', 'downsample', 'nheads', 'pred_len', 'seq_len', 'learning_rate', 'batch_size',
+               'num_mix', 'mixerType', 'tfactor', 'dfactor', 'train_epochs', 'dropout', 'input_dropout',
+               'embedding_dropout', 'd_model', 'weight_decay', 'featureSimilarity', 'target_optimization', 'seed']
+        
+    output_path = './outputs/Results/'
+    excel_file_name = '{}'.format(args.data)
+    excel_path = os.path.join(output_path, excel_file_name + '_res.xlsx')
+    
+    result_dic = defaultdict(list)
+    for key, value in vars(args).items():
+        if key in columns:
+            result_dic[key].append(value)
+            
+    for key, value in result.items():
+        result_dic[key].append(value)
+    result_df = pd.DataFrame(result_dic)
+    
+    try:
+        if os.path.exists(excel_path):
+            existing_df = pd.read_excel(excel_path)
+            updated_df = pd.concat([existing_df, result_df], ignore_index = True)
+        else:
+            updated_df = result_df
+        updated_df.to_excel(excel_path, index = False) # , float_format="%.17e")
+    
+    except Exception as e:
+        print(f"Could not write to {excel_path} due to: {e}")
+        timestamp = time.strftime("%Y%m%d_%H%M%S")
+        fallback_path = os.path.join(output_path, excel_file_name + '_' + timestamp + '.xlsx')
+        result_df.to_excel(fallback_path, index=False)
+        print(f"Saved to fallback file instead: {fallback_path}")
+    return None

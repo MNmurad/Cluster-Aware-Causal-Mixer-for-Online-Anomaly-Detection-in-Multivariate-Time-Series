@@ -1,0 +1,53 @@
+========================================
+Time:        2026-08-14 15:10:22
+Environment: pytorch
+Torch:       2.5.1+cu118
+CUDA:        11.8
+========================================
+*** Config Updated ***
+Args in experiment: Namespace(task_name='anomaly_detection', model='CCM_TAD', target_optimization='sf1', checkpoint_load=1, ablation=0, data='PSM', entity_id=1, downsample=1, train_flag='train', mixerType='causal', num_workers=0, use_hyperParam_optim=False, seed=42, detection_type='online', score_PAdjust=0, featureSimilarity=1, batch_size=512, train_epochs=30, seq_len=24, pred_len=1, num_mix=1, tfactor=1, dfactor=1, learning_rate=0.001337127669423716, dropout=0.0, embedding_dropout=0.05, input_dropout=0.05, d_model=256, weight_decay=0.0, nheads=4, patch_flag=0, patch_len=4, stride=4, lradj='type3', use_multi_gpu=False, n_jobs=1, patience=8, features='M', target='feature_24', freq='h', checkpoints='./checkpoints/', cols=None, itr=1, use_amp=False, use_gpu=True, gpu=0, devices='0,1', embed=0, loss='mse', optuna_seq_len=None, optuna_lr=None, optuna_batch=None, optuna_num_mix=None, optuna_tfactor=None, optuna_dfactor=None, optuna_epochs=None, optuna_dropout=None, optuna_input_dropout=None, optuna_embedding_dropout=None, optuna_dmodel=None, optuna_weight_decay=None, optuna_trial_num=2, data_path=None, root_path='./data/PSM/', c_in=25, c_out=25, num_entities=1, detail_freq='h')
+task: anomaly_detection
+Use GPU: cuda:0
+train_full 132458
+Head intialization: clusters: [3, 5, 15, 2]
+Start Training- CCM_TAD_PSM_0_ds1_E1_H4_24-1_d256_b512_f1-1_causal1_fs1_42
+train 105961
+test 87818
+val 26473
+>>> checkpoint_loading_Successful <<<
+Start Testing- CCM_TAD_PSM_0_ds1_E1_H4_24-1_d256_b512_f1-1_causal1_fs1_42
+test 87818
+val 26473
+[INFO] Register count_linear() for <class 'torch.nn.modules.linear.Linear'>.
+[INFO] Register zero_ops() for <class 'torch.nn.modules.dropout.Dropout'>.
+[INFO] Register zero_ops() for <class 'torch.nn.modules.container.Sequential'>.
+[INFO] Register count_normalization() for <class 'torch.nn.modules.batchnorm.BatchNorm1d'>.
+Total GFLOPs: 3.5451
+=============================================
+              COMBINED RESULTS               
+=============================================
+
+          --- Averaged Metrics ---           
+  TP              20625.0000
+  FP              12619.0000
+  TN              50818.0000
+  FN              3756.0000
+  TPR             0.8459
+  PPV             0.6204
+  FPR             0.1989
+  F1              0.7158
+  PR_AUC          0.5584
+  gflops          3.5451
+  avgInfTime      0.0012
+  nParams         144197.0000
+
+        --- Concatenated Metrics ---         
+  F1              0.7158
+  TP              20625
+  FP              12619
+  TN              50818
+  FN              3756
+
+               --- Alphas ---                
+  [0.5563]
+=============================================
