@@ -6,6 +6,8 @@
 <hr style="border: 1px solid  #256ae2 ;">
 </div>
 
+Please cite our work if it sparks an idea, supports your research, or finds its way into your implementation.
+
 ```bibtex
 @article{murad2025cluster,
   title={Cluster-Aware Causal Mixer for Online Anomaly Detection in Multivariate Time Series},
@@ -119,3 +121,10 @@ If checkpoint does not exist:
 
 In our current scripts, both are set to 1 because we assume a checkpoint is already available.
 
+<table>
+  <tr>
+    <td bgcolor="#313131">
+      <strong>Need help implementing your model or have questions about this framework? Feel free to contact the author. No strings attached.</strong>
+    </td>
+  </tr>
+</table>
