@@ -123,8 +123,8 @@ In our current scripts, both are set to 1 because we assume a checkpoint is alre
 
 <table>
   <tr>
-    <td bgcolor="#313131">
-      <strong>Need help implementing your model or have questions about this framework? Feel free to contact the author. No strings attached.</strong>
+    <td bgcolor="#4da5f3">
+      <strong>Need help implementing your model or have questions about this framework? Feel free to contact the author (mmurad@usf.edu). No strings attached.</strong>
     </td>
   </tr>
 </table>
